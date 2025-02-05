@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ଖେଳ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        
+        header {
+            background: #0396c2;
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header-title {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .header-subtitle {
+            font-size: 1.5em;
+        }
+      
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 1s ease-out 0.1s, transform 1s ease-out 0.2s;
+        }
+        .tile {
+            width: 280px;
+            height: 70px;
+            margin: 12px;
+            background: linear-gradient(to right, #0396c2, #0396c2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            color: white;
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .tile img {
+            position: absolute;
+            left: 10px;
+            width: 50px;
+            height: auto;
+        }
+        .tile:nth-child(2) {
+            background: linear-gradient(to right, #0396c2, #0396c2);
+        }
+        .tile:nth-child(3) {
+            background: linear-gradient(to right, #0396c2, #0396c2);
+        }
+        .tile:nth-child(4) {
+            background: linear-gradient(to right, #0396c2, #0396c2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-title">ଆସ ମଜାରେ ଶିଖିବା</div>
+        <div class="header-subtitle">ସରକାରୀ ଉଚ୍ଚ ପ୍ରାଥମିକ ବିଦ୍ୟାଳୟ, ଠକଦୁଗ୍ଲାହାଣ୍ଡି</div>
+    </header>
+
+    <main>
+        <div class="tile" onclick="goToPage('odianumber/number.html')">
+            <img src="odianum.png" alt="Icon 1">
+            ୧-୨୦
+        </div>
+        <div class="tile" onclick="goToPage('odiawriting.html')">
+            <img src="write.png" alt="Icon 2">
+           ଲିଖନ
+        </div>
+        <div class="tile" onclick="goToPage('odiaadd.html')">
+            <img src="addition.png" alt="Icon 3">
+            ମିଶାଣ
+        </div>
+        <div class="tile" onclick="goToPage('odiasub.html')">
+            <img src="substraction.png" alt="Icon 4">
+            ଫେଡାଣ
+        </div>
+        <div class="tile" onclick="goToPage('table.html')">
+            <img src="multi.png" alt="Icon 4">
+            ପଣିକିଆ
+        </div>
+    </main>
+    <footer></footer>
+
+    <script>
+        function goToPage(page) {
+            window.location.href = page;
+        }
+
+        window.onload = function() {
+            document.querySelector('header').style.opacity = 1;
+            document.querySelector('header').style.transform = 'translateY(0)';
+            document.querySelector('main').style.opacity = 1;
+            document.querySelector('main').style.transform = 'translateY(0)';
+        };
+    </script>
+</body>
+</html>

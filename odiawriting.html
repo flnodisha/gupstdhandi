@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Odia Alphabet Stroke Writing</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    #canvasContainer {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    #canvas {
+        border: 5px solid #000;
+        background-color: #b8fee4;
+        touch-action: none; /* Disable default touch actions */
+    }
+    .button-container {
+        display: flex; /* Use flexbox to arrange items horizontally */
+        justify-content: center; /* Center items horizontally */
+        margin-top: 165%;
+    }
+    .button {
+        padding: 0; /* Remove default padding */
+        cursor: pointer;
+        text-decoration: none; /* Remove default link underline */
+            display: inline-block; /* Ensure button is inline */
+    -webkit-tap-highlight-color: transparent; /* For iOS Safari */
+    tap-highlight-color: transparent; /* For other browsers */
+    }
+    .button img {
+        width: 50px; /* Adjust width of the image */
+    }
+    .button:not(:last-child) {
+        margin-right: 20px; /* Add margin to the right of all buttons except the last one */
+    }
+    .header-image {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%; /* Adjust width as needed */
+        height: auto; /* Maintain aspect ratio */
+        z-index: 999; /* Ensure it appears above other content */
+    }
+        #textBelowButton {
+            position: absolute;
+            top: 70px;
+            left: 15px;
+            color: #333333;
+            font-size: 16px;
+        }
+        #webm-container {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            width: 100px; /* Adjust width and height according to your animation */
+            height: 100px;
+            z-index: 10000; /* Ensure it's above other elements */
+        }
+</style>
+</head>
+<body>
+<video id="webm-container" autoplay loop muted>
+  <source src="writinganimation.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
+<img src="header1.png" alt="Header Image" class="header-image">
+<div id="textBelowButton">ସଂଖ୍ୟା ଲିଖନ</div>
+<div id="canvasContainer">
+<div id="canvasContainer">
+    <canvas id="canvas" width="300" height="300"></canvas>
+</div>
+<div class="button-container">
+    <div class="button" onclick="previousLetter()">
+        <img src="left-arrow.png" alt="Previous">
+    </div>
+    <div class="button" onclick="clearCanvas()">
+        <img src="erase.png" alt="Clear">
+    </div>
+    <div class="button" onclick="nextLetter()">
+        <img src="right-arrow.png" alt="Next">
+    </div>
+</div>
+
+<script>
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+    let drawing = false;
+    let currentLetterIndex = 0; // Set currentLetterIndex to 0 to start from the first letter
+    let letters = ['୦', '୧', '୨', '୩', '୪', '୫', '୬', '୭', '୮', '୯', '୧୦', '୧୧', '୧୨', '୧୩', '୧୪', '୧୫', '୧୬', '୧୭', '୧୮', '୧୯', '୨୦']; // Add more letters as needed
+
+    function selectLetter(letter) {
+        // Clear canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Draw letter with half transparency
+        ctx.font = '250px Arial'; // Adjusted font size
+        ctx.textAlign = 'center'; // Center the text horizontally
+        ctx.textBaseline = 'middle'; // Center the text vertically
+        ctx.globalAlpha = 0.3; // Set transparency
+        ctx.fillText(letter, canvas.width / 2, canvas.height / 1.7); // Center the text
+        ctx.globalAlpha = 1; // Reset transparency
+    }
+
+    function previousLetter() {
+        currentLetterIndex = (currentLetterIndex - 1 + letters.length) % letters.length;
+        selectLetter(letters[currentLetterIndex]);
+    }
+
+    function nextLetter() {
+        currentLetterIndex = (currentLetterIndex + 1) % letters.length;
+        selectLetter(letters[currentLetterIndex]);
+    }
+
+   function clearCanvas() {
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Redraw current letter
+    selectLetter(letters[currentLetterIndex]);
+}
+
+
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('touchstart', startDrawing);
+
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('touchmove', draw);
+
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('touchend', stopDrawing);
+
+    function startDrawing(e) {
+        drawing = true;
+        draw(e);
+    }
+
+    function draw(e) {
+        if (!drawing) return;
+
+        let x, y;
+        if (e.type.startsWith('touch')) {
+            e.preventDefault(); // Prevent scrolling on touch devices
+            x = e.touches[0].clientX - canvas.getBoundingClientRect().left;
+            y = e.touches[0].clientY - canvas.getBoundingClientRect().top;
+        } else {
+            x = e.offsetX;
+            y = e.offsetY;
+        }
+
+        ctx.lineWidth = 15; // Set a larger brush size
+        ctx.lineTo(x, y);
+        ctx.stroke();
+    }
+
+    function stopDrawing() {
+        drawing = false;
+        ctx.beginPath(); // Start a new line for the next stroke
+    }
+
+    // Call selectLetter function with the first letter of the array
+    selectLetter(letters[currentLetterIndex]); // Display the first letter when the page is loaded
+</script>
+</body>
+</html>

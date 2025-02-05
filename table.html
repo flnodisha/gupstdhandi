@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Multiplication Table with Audio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+            margin: 0;
+        }
+        .table-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .table-container table {
+            border-collapse: separate;
+            border-spacing: 0 8px;
+            width: 250px;
+        }
+        .table-container td {
+            padding: 8px;
+            height: 10px;
+            border-radius: 5px;
+            background-color: #81caeb;
+            font-size: 20px;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .table-container td.active {
+            background-color: #ff6f61; /* Highlight color for active row */
+        }
+        #playAllButton {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #playAllButton:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="table-container">
+    <table>
+        <!-- Multiplication table rows will be generated here -->
+    </table>
+</div>
+
+<button id="playAllButton">Play All</button>
+
+<script>
+// Array of multiplication results
+const tableData = [
+    "୨ × ୧ = ୨",
+    "୨ × ୨ = ୪",
+    "୨ × ୩ = ୬",
+    "୨ × ୪ = ୮",
+    "୨ × ୫ = ୧୦",
+    "୨ × ୬ = ୧୨",
+    "୨ × ୭ = ୧୪",
+    "୨ × ୮ = ୧୬",
+    "୨ × ୯ = ୧୮",
+    "୨ × ୧୦ = ୨୦"
+];
+
+// Function to create table and populate it with data
+function createTable() {
+    const table = document.querySelector(".table-container table");
+
+    tableData.forEach((text) => {
+        const row = document.createElement("tr");
+        const cell = document.createElement("td");
+        cell.textContent = text;
+        row.appendChild(cell);
+        table.appendChild(row);
+    });
+}
+
+// Function to play audio in sequence for each table row
+async function playAllAudio() {
+    const rows = document.querySelectorAll(".table-container td");
+    
+    for (let i = 0; i < rows.length; i++) {
+        // Add 'active' class to highlight the current row
+        rows[i].classList.add("active");
+        
+        // Play the corresponding audio file
+        const audio = new Audio(`audio/2x${i + 1}.mp3`);
+        await playAudioFile(audio);
+        
+        // Remove 'active' class after audio is played
+        rows[i].classList.remove("active");
+    }
+}
+
+// Helper function to play audio file and return a promise to wait for it to finish
+function playAudioFile(audio) {
+    return new Promise((resolve) => {
+        audio.play();
+        audio.onended = resolve;
+    });
+}
+
+// Event listener for the "Play All" button
+document.getElementById("playAllButton").addEventListener("click", playAllAudio);
+
+// Generate the table
+createTable();
+</script>
+
+</body>
+</html>

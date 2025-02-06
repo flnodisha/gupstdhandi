@@ -97,7 +97,7 @@ async function playAllAudio() {
         rows[i].classList.add("active");
         
         // Play the corresponding audio file
-        const audio = new Audio(`audio/2x${i + 1}.mp3`);
+        const audio = new Audio(`2x${i + 1}.mp3`);
         await playAudioFile(audio);
         
         // Remove 'active' class after audio is played
